@@ -1,0 +1,201 @@
+@csrf
+
+@if (!empty($produk->foto))
+<div style="margin-bottom:25px;">
+    <label style="font-weight:600;color:#5C4838;">Foto Saat Ini</label><br>
+
+    <img src="{{ asset('storage/'.$produk->foto) }}"
+        style="
+        width:150px;
+        height:150px;
+        object-fit:cover;
+        border-radius:20px;
+        border:3px solid #F3E3D3;
+        margin-top:10px;
+        ">
+</div>
+@endif
+
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-bottom:25px;">
+
+    <!-- Upload -->
+    <div>
+
+        <label style="font-weight:600;color:#5C4838;">
+            📷 Gambar Produk
+        </label>
+
+        <input
+            type="file"
+            name="foto"
+            onchange="previewImage(this)"
+            class="@error('foto') is-invalid @enderror"
+
+            style="
+            width:100%;
+            margin-top:8px;
+            padding:12px;
+            border:1px solid #E6D7C8;
+            border-radius:15px;
+            background:#FFF8F2;
+            ">
+
+        @error('foto')
+        <div style="color:red;margin-top:6px;">
+            {{ $message }}
+        </div>
+        @enderror
+
+    </div>
+    
+    <div>
+
+        <label style="font-weight:600;color:#5C4838;">
+            Preview Foto
+        </label>
+
+        <br>
+
+        <img id="preview"
+            style="
+            display:none;
+            width:150px;
+            height:150px;
+            object-fit:cover;
+            border-radius:20px;
+            border:3px solid #F3E3D3;
+            margin-top:10px;
+            ">
+
+    </div>
+
+</div>
+
+<div style="margin-bottom: 20px;">
+    <label style="font-weight: 600; color: #5C4838;">
+        🍞 Nama Produk
+    </label>
+
+    <input type="text"
+           name="name"
+           value="{{ old('name', $produk->name ?? '') }}"
+           style="
+               width: 100%;
+               margin-top: 8px;
+               padding: 14px;
+               border: 1px solid #E6D7C8;
+               border-radius: 15px;
+               background: #FFF8F2;
+           ">
+
+    @error('name')
+        <div style="color: red; margin-top: 6px;">
+            {{ $message }}
+        </div>
+    @enderror
+
+    </div>
+
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+    <div>
+        <label style="font-weight: 600; color: #5C4838;">
+            💰 Harga Beli
+        </label>
+
+        <input type="number"
+               name="purchase_price"
+               value="{{ old('purchase_price', $produk->harga_beli ?? '') }}"
+               style="
+                   width: 100%;
+                   margin-top: 8px;
+                   padding: 14px;
+                   border: 1px solid #E6D7C8;
+                   border-radius: 15px;
+                   background: #FFF8F2;
+               ">
+    </div>
+
+    <div>
+        <label style="font-weight: 600; color: #5C4838;">
+            🏷 Harga Jual
+        </label>
+
+        <input type="number"
+               name="selling_price"
+               value="{{ old('selling_price', $produk->harga_jual ?? '') }}"
+               style="
+                   width: 100%;
+                   margin-top: 8px;
+                   padding: 14px;
+                   border: 1px solid #E6D7C8;
+                   border-radius: 15px;
+                   background: #FFF8F2;
+               ">
+    </div>
+
+</div>
+
+<div style="margin-top: 20px;">
+    <label style="font-weight: 600; color: #5C4838;">
+        📦 Stok
+    </label>
+
+    <input type="number"
+           name="stock"
+           value="{{ old('stock', $produk->stok ?? '') }}"
+           style="
+               width: 100%;
+               margin-top: 8px;
+               padding: 14px;
+               border: 1px solid #E6D7C8;
+               border-radius: 15px;
+               background: #FFF8F2;
+           ">
+</div>
+
+<div style="
+    display: flex;
+    gap: 15px;
+    margin-top: 35px;
+">
+    <button type="submit"
+            style="
+                background: #D97736;
+                color: white;
+                border: none;
+                padding: 14px 30px;
+                border-radius: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 10px 20px rgba(217, 119, 54, .25);
+            ">
+        💾 Simpan
+    </button>
+
+    <a href="{{ route('produk.index') }}"
+       style="
+           background: #EFE4D8;
+           color: #5C4838;
+           padding: 14px 30px;
+           border-radius: 15px;
+           text-decoration: none;
+           font-weight: 600;
+       ">
+        ← Kembali
+    </a>
+</div>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('preview');
+
+        if (input.files && input.files[0]) {
+            preview.src = URL.createObjectURL(input.files[0]);
+            preview.style.display = 'block';
+        }
+    }
+</script>
