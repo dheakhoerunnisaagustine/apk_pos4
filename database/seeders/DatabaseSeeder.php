@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ProdukSeeder::class,
-            JenisSeeder::class;
+            JenisSeeder::class,
             PenjualanSeeder::class
         ]);
 

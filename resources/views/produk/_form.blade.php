@@ -2,7 +2,10 @@
 
 @if (!empty($produk->foto))
     <div style="margin-bottom: 25px;">
-        <label style="font-weight: 600; color: #5C4838;">Foto Saat Ini</label><br>
+        <label style="font-weight: 600; color: #5C4838;">
+            Foto Saat Ini
+        </label>
+        <br>
 
         <img src="{{ asset('storage/'.$produk->foto) }}"
              style="
@@ -16,7 +19,14 @@
     </div>
 @endif
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
+<div style="
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+">
+
+    <!-- Gambar Produk -->
     <div>
         <label style="font-weight: 600; color: #5C4838;">
             📷 Gambar Produk
@@ -42,6 +52,7 @@
         @enderror
     </div>
 
+    <!-- Preview Foto -->
     <div>
         <label style="font-weight: 600; color: #5C4838;">
             Preview Foto
@@ -60,8 +71,10 @@
                  margin-top: 10px;
              ">
     </div>
+
 </div>
 
+<!-- Nama Produk -->
 <div style="margin-bottom: 20px;">
     <label style="font-weight: 600; color: #5C4838;">
         🍞 Nama Produk
@@ -86,8 +99,15 @@
     @enderror
 </div>
 
-<!-- Harga Beli & Jenis Produk Berjajar (2 Kolom) -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+<!-- Harga Beli & Jenis Produk -->
+<div style="
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+">
+
+    <!-- Harga Beli -->
     <div>
         <label style="font-weight: 600; color: #5C4838;">
             💰 Harga Beli
@@ -104,38 +124,50 @@
                    border-radius: 15px;
                    background: #FFF8F2;
                ">
-    </div>
 
-    <div>
-        <label style="font-weight: 600; color: #5C4838; display: block; margin-bottom: 8px;">
-            🏷️ Jenis Produk
-        </label>
-
-        <select name="jenis_id"
-                class="form-control @error('jenis_id') is-invalid @enderror"
-                required
-                style="
-                    width: 100%;
-                    padding: 14px;
-                    border: 1px solid #E6D7C8;
-                    border-radius: 15px;
-                    background: #FFF8F2;
-                    color: #5C4838;
-                ">
-            <option value="">-- Pilih Jenis Produk --</option>
-            @foreach($jenis as $item)
-                <option value="{{ $item->id }}" {{ (isset($produk) && $produk->jenis_id == $item->id) ? 'selected' : '' }}>
-                    {{ $item->nama_jenis }}
-                </option>
-            @endforeach
-        </select>
-
-        @error('jenis_id')
+        @error('purchase_price')
             <div style="color: red; margin-top: 6px;">
                 {{ $message }}
             </div>
         @enderror
     </div>
+
+    <!-- Jenis Produk -->
+   <div>
+    <label style="font-weight: 600; color: #5C4838; display: block; margin-bottom: 8px;">
+        🏷️ Jenis Produk
+    </label>
+
+    <select name="jenis_id"
+            id="jenis_id"
+            required
+            style="
+                width: 100%;
+                padding: 14px;
+                border: 1px solid #E6D7C8;
+                border-radius: 15px;
+                background: #FFF8F2;
+                color: #5C4838;
+            ">
+
+        <option value="">-- Pilih Jenis Produk --</option>
+
+        @foreach($jenis as $item)
+            <option value="{{ $item->jenis_id }}"
+                {{ old('jenis_id') == $item->jenis_id ? 'selected' : '' }}>
+                {{ $item->nama_jenis }}
+            </option>
+        @endforeach
+
+    </select>
+
+    @error('jenis_id')
+        <div style="color: red; margin-top: 6px;">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
 </div>
 
 <!-- Harga Jual -->
@@ -155,8 +187,15 @@
                border-radius: 15px;
                background: #FFF8F2;
            ">
+
+    @error('selling_price')
+        <div style="color: red; margin-top: 6px;">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
 
+<!-- Stok -->
 <div style="margin-top: 20px;">
     <label style="font-weight: 600; color: #5C4838;">
         📦 Stok
@@ -173,13 +212,21 @@
                border-radius: 15px;
                background: #FFF8F2;
            ">
+
+    @error('stock')
+        <div style="color: red; margin-top: 6px;">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
 
+<!-- Tombol -->
 <div style="
     display: flex;
     gap: 15px;
     margin-top: 35px;
 ">
+
     <button type="submit"
             style="
                 background: #D97736;
@@ -205,6 +252,7 @@
        ">
         ← Kembali
     </a>
+
 </div>
 
 <script>

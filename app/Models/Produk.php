@@ -19,19 +19,18 @@ class Produk extends Model
         'harga_beli',
         'harga_jual',
         'stok',
-        'jenis',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function ItemPenjualan()
     {
         return $this->hasMany(ItemPenjualan::class, 'produk_id');
     }
-    
+
     public function jenisProduk()
     {
         return $this->belongsTo(Jenis::class, 'jenis_id');

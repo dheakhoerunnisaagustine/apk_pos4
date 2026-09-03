@@ -23,6 +23,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'jenis_id' => 'required|exists:jenis,jenis_id',
             'name' => 'required|string|max:255',
             'purchase_price' => 'required|integer|min:0',
             'selling_price' => 'required|integer|min:0',

@@ -11,12 +11,18 @@ class Jenis extends Model
 
     protected $table = 'jenis';
 
+    protected $primaryKey = 'jenis_id';
+
+    public $incrementing = true;
+
+    protected $keyType = 'int';
+
     protected $fillable = [
         'nama_jenis',
     ];
 
     public function produk()
     {
-        return $this->hasMany(Produk::class, 'jenis_id');
+        return $this->hasMany(Produk::class, 'jenis_id', 'jenis_id');
     }
 }

@@ -62,7 +62,7 @@ class ProdukController extends Controller
 
         $data = [
             'user_id'       => Auth::id(),
-            'jenis_id'      => $request->jenis_id,
+            'jenis_id'      => $dataReq['jenis_id'],
             'nama'          => $dataReq['name'],
             'harga_beli'    => $dataReq['purchase_price'],
             'harga_jual'    => $dataReq['selling_price'],

@@ -113,7 +113,7 @@
                                     {{ $product->nama }}
                                 </div>
                                 <small style="color:#8C7A6B; font-size:13px;">
-                                    {{ $product->user->name ?? '-' }}
+                                    {{ $product->jenisProduk->nama ?? '-' }}
                                 </small>
                             </td>
 
