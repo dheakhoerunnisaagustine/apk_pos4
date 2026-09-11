@@ -78,7 +78,7 @@
                             <th style="padding:15px; text-align:center; width:6%;">No</th>
                             <th style="padding:15px; text-align:center; width:10%;">Foto</th>
                             <th style="padding:15px; text-align:left; width:28%;">Nama Produk</th>
-                            <th style="padding:15px 10px; text-align:right; width:16%; white-space:nowrap;">Harga Pokok</th>
+                            <th style="padding:15px px; text-align:right; width:14%;">Harga Pokok</th>
                             <th style="padding:15px 20px; text-align:right; width:14%;">Harga Jual</th>
                             <th style="padding:15px; text-align:center; width:12%;">Jenis</th>
                             <th style="padding:15px; text-align:center; width:12%;">Stok</th>

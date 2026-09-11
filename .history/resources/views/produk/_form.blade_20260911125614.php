@@ -110,7 +110,7 @@
     <!-- Harga Pokok -->
     <div>
         <label style="font-weight: 600; color: #5C4838;">
-            💰 Harga Pokok
+            💰 Harga Beli
         </label>
 
         <input type="number"
