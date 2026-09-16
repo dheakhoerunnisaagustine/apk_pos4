@@ -228,8 +228,8 @@
                     {{-- KODE QRIS (MUNCUL JIKA PILIH QRIS) --}}
                     <div id="qris_container" class="mb-2 text-center p-3 bg-white rounded-3 border" style="display: none;">
                         <p class="mb-2 fw-semibold" style="font-size: 13px; color: #4A3525;">Scan QRIS untuk Pembayaran:</p>
-                        {{-- Gambar QRIS menggunakan file qris.jpg di folder public/images/ --}}
-                        <img src="{{ asset('images/qris.jpg') }}" alt="QRIS Code" style="width: 150px; height: 150px; object-fit: contain;">
+                        {{-- Ganti link gambar di bawah dengan foto QRIS toko Anda (bisa simpan di folder public/images/) --}}
+                        <img src="{{ asset('images/qris-dummy.png') }}" alt="QRIS Code" style="width: 150px; height: 150px; object-fit: contain;">
                         <p class="text-muted mt-2 mb-0" style="font-size: 11px;">Silakan scan menggunakan m-Banking atau E-Wallet</p>
                     </div>
 

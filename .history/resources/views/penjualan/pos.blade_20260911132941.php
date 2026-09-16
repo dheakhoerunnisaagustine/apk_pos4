@@ -4,7 +4,10 @@
 
 @section('content')
 
-@include('layouts.navbar')
+{{-- Navbar disembunyikan saat mode cetak --}}
+<div class="no-print">
+    @include('layouts.navbar')
+</div>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -63,19 +66,54 @@
         color: #4A3525;
         font-weight: 700;
     }
+
+    /* =========================================
+        PENGATURAN CETAK STRUK (THERMAL / POS)
+       ========================================= */
+    #receipt-print-area {
+        display: none; /* Sembunyikan di layar normal */
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        .no-print, nav, footer, header {
+            display: none !important;
+        }
+
+        #receipt-print-area, #receipt-print-area * {
+            visibility: visible;
+        }
+
+        #receipt-print-area {
+            display: block !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 58mm; /* Lebar standar kertas printer thermal */
+            margin: 0;
+            padding: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            color: #000;
+            background: #fff;
+        }
+    }
 </style>
 
 @if(session('error'))
-    <div class="alert alert-danger mb-3">
+    <div class="alert alert-danger mb-3 no-print">
         {{ session('error') }}
     </div>
 @endif
 
-<h4 class="my-4">
+<h4 class="my-4 no-print">
     🍞 {{ $mode === 'edit' ? 'Edit Penjualan' : 'Kasir Bakery' }}
 </h4>
 
-<div class="row">
+<div class="row no-print">
 
     {{-- ===================== PRODUK ===================== --}}
     <div class="col-md-6">
@@ -218,17 +256,16 @@
                         <option value="QRIS">QRIS</option>
                     </select>
 
-                    {{-- KOLOM INPUT KASIR TUNAI (MUNCUL JIKA PILIH CASH) --}}
+                    {{-- KOTAK KASIR TUNAI --}}
                     <div id="cash_input_container" class="mb-2" style="display: none;">
                         <label class="form-label mb-1" style="font-size: 13px; font-weight: 500; color: #4A3525;">Uang Tunai (Cash):</label>
                         <input type="number" id="cash_amount" class="form-control mb-1" placeholder="Masukkan jumlah uang..." oninput="hitungKembalian()">
                         <div id="kembalian_info" class="fw-semibold" style="font-size: 13px;"></div>
                     </div>
 
-                    {{-- KODE QRIS (MUNCUL JIKA PILIH QRIS) --}}
+                    {{-- KODE QRIS (Gunakan qris.jpg) --}}
                     <div id="qris_container" class="mb-2 text-center p-3 bg-white rounded-3 border" style="display: none;">
                         <p class="mb-2 fw-semibold" style="font-size: 13px; color: #4A3525;">Scan QRIS untuk Pembayaran:</p>
-                        {{-- Gambar QRIS menggunakan file qris.jpg di folder public/images/ --}}
                         <img src="{{ asset('images/qris.jpg') }}" alt="QRIS Code" style="width: 150px; height: 150px; object-fit: contain;">
                         <p class="text-muted mt-2 mb-0" style="font-size: 11px;">Silakan scan menggunakan m-Banking atau E-Wallet</p>
                     </div>
@@ -237,6 +274,13 @@
                         Checkout
                     </button>
                 </form>
+
+                {{-- TOMBOL CETAK STRUK (MUNCUL SETELAH STATUS COMPLETED) --}}
+                @if($sale->status === 'COMPLETED')
+                    <button type="button" onclick="window.print()" class="btn btn-primary w-100 mt-2">
+                        🖨️ Cetak Struk
+                    </button>
+                @endif
 
                 @if(auth()->user()->role->name === 'admin')
                     <form action="{{ route('penjualan.destroy', $sale->id) }}"
@@ -258,7 +302,56 @@
 
 </div>
 
-{{-- SCRIPT UNTUK MENGATUR MUNCUL/TUTUP INPUT CASH DAN QRIS --}}
+
+{{-- ========================================================= --}}
+{{-- TEMPLATE STRUK UNTUK DICETAK KETIKA TOMBOL PRINT DITEKAN --}}
+{{-- ========================================================= --}}
+<div id="receipt-print-area">
+    <div style="text-align: center; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 16px; font-weight: bold;">HOLLAND BAKERY</h3>
+        <p style="margin: 2px 0; font-size: 10px;">Kasir Bakery</p>
+    </div>
+
+    <div style="border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 4px 0; margin-bottom: 6px; font-size: 10px;">
+        <div>No Transaksi: #{{ $sale->id }}</div>
+        <div>Tanggal: {{ date('d/m/Y H:i') }}</div>
+        <div>Kasir: {{ auth()->user()->name ?? 'Kasir' }}</div>
+    </div>
+
+    <div style="margin-bottom: 6px;">
+        <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
+            @foreach($sale->itemPenjualan as $item)
+                <tr>
+                    <td colspan="3" style="padding-top: 2px;">{{ $item->produk->nama }}</td>
+                </tr>
+                <tr>
+                    <td>{{ $item->kuantitas }} x {{ number_format($item->produk->harga_jual, 0, ',', '.') }}</td>
+                    <td></td>
+                    <td style="text-align: right;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
+
+    <div style="border-top: 1px dashed #000; padding-top: 4px; font-size: 10px;">
+        <div style="display: flex; justify-content: space-between;">
+            <span>TOTAL:</span>
+            <span style="font-weight: bold; float: right;">Rp {{ number_format($sale->total_pembayaran, 0, ',', '.') }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <span>Metode:</span>
+            <span style="float: right;">{{ $sale->payment_method ?? 'CASH' }}</span>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 15px; font-size: 10px;">
+        <p style="margin: 0;">Terima Kasih</p>
+        <p style="margin: 0;">Selamat Menikmati!</p>
+    </div>
+</div>
+
+
+{{-- SCRIPT JAVASCRIPT --}}
 <script>
     const totalBelanja = {{ $sale->total_pembayaran }};
 
@@ -268,13 +361,11 @@
         const qrisContainer = document.getElementById('qris_container');
         const cashInput = document.getElementById('cash_amount');
 
-        // Reset semua tampilan dulu
         cashContainer.style.display = 'none';
         qrisContainer.style.display = 'none';
         cashInput.value = '';
         document.getElementById('kembalian_info').innerHTML = '';
 
-        // Tampilkan sesuai pilihan
         if (paymentMethod === 'CASH') {
             cashContainer.style.display = 'block';
         } else if (paymentMethod === 'QRIS') {
@@ -295,13 +386,13 @@
         const selisih = bayar - totalBelanja;
 
         if (selisih < 0) {
-            infoDiv.style.color = '#dc3545'; // Merah jika kurang
+            infoDiv.style.color = '#dc3545';
             infoDiv.innerHTML = '⚠️ Uang kurang Rp ' + Math.abs(selisih).toLocaleString('id-ID');
         } else if (selisih === 0) {
-            infoDiv.style.color = '#198754'; // Hijau jika pas
+            infoDiv.style.color = '#198754';
             infoDiv.innerHTML = '✅ Uang pas!';
         } else {
-            infoDiv.style.color = '#198754'; // Hijau jika ada kembalian
+            infoDiv.style.color = '#198754';
             infoDiv.innerHTML = '💰 Kembalian: Rp ' + selisih.toLocaleString('id-ID');
         }
     }

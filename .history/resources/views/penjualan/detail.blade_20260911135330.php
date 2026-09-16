@@ -116,10 +116,22 @@
                 <hr style="border-color: #F0E2D3; margin: 15px 0;">
 
                 <div class="row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-md-4 mb-3">
                         <p style="color: #8C7A6B; margin-bottom: 5px;">Total Pembayaran</p>
                         <h5 style="color: #8B5E3C; font-weight: 700; margin: 0;">
                             Rp {{ number_format($penjualan->total_pembayaran, 0, ',', '.') }}
+                        </h5>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <p style="color: #8C7A6B; margin-bottom: 5px;">Uang Dibayar (Tunai)</p>
+                        <h5 style="color: #4A3525; font-weight: 700; margin: 0;">
+                            Rp {{ number_format($penjualan->uang_dibayar ?? $penjualan->total_pembayaran, 0, ',', '.') }}
+                        </h5>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <p style="color: #8C7A6B; margin-bottom: 5px;">Kembalian</p>
+                        <h5 style="color: #2E7D32; font-weight: 700; margin: 0;">
+                            Rp {{ number_format($penjualan->kembalian ?? 0, 0, ',', '.') }}
                         </h5>
                     </div>
                 </div>
@@ -209,22 +221,20 @@
             <span>TOTAL:</span>
             <span>Rp {{ number_format($penjualan->total_pembayaran, 0, ',', '.') }}</span>
         </div>
-
-        @if($penjualan->metode_pembayaran === 'CASH')
-            <div style="display: flex; justify-content: space-between;">
-                <span>TUNAI:</span>
-                <span>Rp {{ number_format($penjualan->uang_dibayar ?? $penjualan->total_pembayaran, 0, ',', '.') }}</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                <span>KEMBALIAN:</span>
-                <span>Rp {{ number_format($penjualan->kembalian ?? 0, 0, ',', '.') }}</span>
-            </div>
-        @else
-            <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                <span>STATUS:</span>
-                <span>LUNAS ({{ $penjualan->metode_pembayaran }})</span>
-            </div>
-        @endif
+        <div style="display: flex; justify-content: space-between;">
+            <span>TUNAI:</span>
+            <span>Rp {{ number_format($penjualan->uang_dibayar ?? $penjualan->total_pembayaran, 0, ',', '.') }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-weight: bold;">
+            <span>KEMBALIAN:</span>
+            <span>Rp {{ number_format($penjualan->kembalian ?? 0, 0, ',', '.') }}</span>
+        </div>
     </div>
+
+    <div style="text-align: center; margin-top: 12px; font-size: 9px;">
+        <p style="margin: 0;">Terima Kasih</p>
+        <p style="margin: 0;">Selamat Menikmati!</p>
+    </div>
+</div>
 
 @endsection

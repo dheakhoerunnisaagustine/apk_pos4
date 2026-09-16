@@ -205,26 +205,16 @@
     </div>
 
     <div style="border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 4px 0; font-size: 9px; margin-bottom: 6px;">
-        <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between; font-weight: bold;">
             <span>TOTAL:</span>
             <span>Rp {{ number_format($penjualan->total_pembayaran, 0, ',', '.') }}</span>
         </div>
-
-        @if($penjualan->metode_pembayaran === 'CASH')
-            <div style="display: flex; justify-content: space-between;">
-                <span>TUNAI:</span>
-                <span>Rp {{ number_format($penjualan->uang_dibayar ?? $penjualan->total_pembayaran, 0, ',', '.') }}</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                <span>KEMBALIAN:</span>
-                <span>Rp {{ number_format($penjualan->kembalian ?? 0, 0, ',', '.') }}</span>
-            </div>
-        @else
-            <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                <span>STATUS:</span>
-                <span>LUNAS ({{ $penjualan->metode_pembayaran }})</span>
-            </div>
-        @endif
     </div>
+
+    <div style="text-align: center; margin-top: 12px; font-size: 9px;">
+        <p style="margin: 0;">Terima Kasih</p>
+        <p style="margin: 0;">Selamat Menikmati!</p>
+    </div>
+</div>
 
 @endsection

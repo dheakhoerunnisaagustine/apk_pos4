@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg shadow-sm" style="background:#8B5E3C;">
     <div class="container">
 
-        <!-- LOGO DI POJOK KIRI YANG KALAU DIPENCET MUNCUL POP-UP -->
+        <!-- TOMBOL DI POJOK KIRI YANG KALAU DIPENCET MUNCUL POP-UP -->
         <a class="navbar-brand text-white fw-bold" href="#" data-bs-toggle="modal" data-bs-target="#modalTentangToko" style="cursor: pointer;">
             🍞 Holland Bakery
         </a>
@@ -15,7 +15,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('dashboard') ? 'fw-bold border-bottom border-2' : '' }}"
                         href="{{ route('dashboard') }}">
@@ -42,15 +41,6 @@
                     </a>
                 </li>
 
-                <!-- MENU TENTANG DI TENGAH DIKEMBALIKAN DI SINI -->
-                <li class="nav-item">
-                    <a class="nav-link text-white {{ Request::is('tentang*') ? 'fw-bold border-bottom border-2' : '' }}"
-                        href="{{ route('tentang') }}">
-                        <i class="bi bi-info-circle-fill me-1"></i>
-                        Tentang
-                    </a>
-                </li>
-
                 <li class="nav-item">
                     <a class="nav-link text-white {{ Request::is('penjualan*') ? 'fw-bold border-bottom border-2' : '' }}"
                         href="{{ route('penjualan.index') }}">
@@ -58,11 +48,9 @@
                         Penjualan
                     </a>
                 </li>
-
             </ul>
 
             <div class="d-flex align-items-center">
-
                 @auth
                     <div class="text-white text-end me-3">
                         <small>Login sebagai</small><br>
@@ -82,7 +70,6 @@
                         Masuk
                     </a>
                 @endauth
-
             </div>
 
         </div>
@@ -107,7 +94,7 @@
                 <!-- KOTAK DESKRIPSI UTAMA -->
                 <div style="background: #FFF8F1; border-left: 5px solid #D97736; padding: 20px; border-radius: 0 12px 12px 0; margin-bottom: 20px;">
                     <p style="color: #5C4838; font-size: 15px; line-height: 1.7; margin: 0;">
-                        Holland Bakery adalah toko roti terkemuka yang menyajikan aneka pilihan makanan dan minuman berkualitas tinggi, mulai dari roti manis, pastry renyah, kue tart, hingga hidangan penutup dan minuman segar yang selalu dibuat setiap hari. Kami berkomitmen untuk selalu mengutamakan kepuasan pelanggan dengan menggunakan bahan-bahan pilihan yang segar, higienis, dan bermutu tinggi pada setiap produk makanan dan minuman yang kami sajikan.
+                        Holland Bakery adalah toko roti terkemuka yang menyajikan aneka pilihan makanan dan minuman berkualitas tinggi, mulai dari roti manis, pastry renyah, kue tart, hingga hidangan penutup dan minuman segar yang selalu dibuat setiap hari. Kami berkomitmen untuk selalu mengutamakan kepuasan pelanggan dengan menggunakan bahan-bahan pilihan yang segar, higienis, dan bermutu tinggi.
                     </p>
                 </div>
 

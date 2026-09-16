@@ -15,7 +15,7 @@
                     {{-- Bagian Foto dan Nama Pengembang --}}
                     <div class="text-center mb-5">
                         <img src="{{ asset('images/foto.jpeg') }}" alt="Foto Pengembang"
-                       
+                        <img src="{{ asset('images/foto.jpg') }}" alt="Foto Pengembang" 
                             class="rounded-circle shadow mb-3 border border-3 border-light" 
                             style="width: 150px; height: 150px; object-fit: cover;">
                         
